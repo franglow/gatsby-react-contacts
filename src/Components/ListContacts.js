@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import escapeRegExp from 'escape-string-regexp'
+import sortBy from 'sort-by'
 import './index.css';
 import { FaTimes } from 'react-icons/fa';
 
@@ -70,6 +72,22 @@ function ListContacts({ contacts, onContactChange }) {
 
   const updateQuery = (query => {setQuery(query.trim() )})
 
+  const clearQuery = () => {
+    setQuery('')
+  } 
+
+  let showingContacts
+
+  // Check for truthy, meaning if state is not empty.
+  if (query) {
+    const match = new RegExp(escapeRegExp(query), `i`)
+    showingContacts = contacts.filter((contact) => match.test(contact.name))
+  } else {
+    showingContacts = contacts
+  }
+
+  showingContacts.sort(sortBy('name'))
+
     return(
       <div className='list-contacts'>
         <div className='list-contacts-top'>
@@ -82,8 +100,16 @@ function ListContacts({ contacts, onContactChange }) {
           >    
           </input>
         </div>
+
+        {showingContacts.length !== contacts.length && 
+          <div className='showing-contacts'>
+            <span>Now showing {showingContacts.length} of {contacts.length}</span>
+            <button onClick={clearQuery}>Show All</button>
+          </div>
+        }
+
         <ol className='contact-list'>
-          {contacts.map(item => (
+          {showingContacts.map(item => (
             <li key={item.id} className='contact-list-item'>
               <div className='contact-avatar' style={{
                 backgroundImage: `url(${item.avatarURL})`

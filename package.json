@@ -15,9 +15,11 @@
     "clean": "gatsby clean"
   },
   "dependencies": {
+    "escape-string-regexp": "^5.0.0",
     "gatsby": "^3.6.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-icons": "^4.2.0"
+    "react-icons": "^4.2.0",
+    "sort-by": "^1.2.0"
   }
 }

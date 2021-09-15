@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "develop": "gatsby develop",
-    "start": "gatsby develop",
+    "start": "cross-env NODE_OPTIONS=\"-r esm\" gatsby develop",
     "build": "gatsby build",
     "serve": "gatsby serve",
     "clean": "gatsby clean"
@@ -17,9 +17,14 @@
   "dependencies": {
     "escape-string-regexp": "^5.0.0",
     "gatsby": "^3.6.2",
+    "isomorphic-fetch": "^3.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-icons": "^4.2.0",
     "sort-by": "^1.2.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "esm": "^3.2.25"
   }
 }

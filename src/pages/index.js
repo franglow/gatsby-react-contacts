@@ -1,5 +1,6 @@
-import React, { useState } from "react"
-import ListContacts from "../Components/ListContacts"
+import React, { useEffect, useState } from "react";
+import { graphql } from "gatsby";
+import ListContacts from "../Components/ListContacts";
 
 //styles
 /* CreateContact */
@@ -113,29 +114,8 @@ const showingContactsButton = {
 
 
 // markup
-const IndexPage = () => {
-  const [contacts, setContacts] = useState(
-    [
-      {
-        "id": "ryan",
-        "name": "Ryan Florence",
-        "email": "ryan@reacttraining.com",
-        "avatarURL": "http://localhost:5001/ryan.jpg"
-      },
-      {
-        "id": "michael",
-        "name": "Michael Jackson",
-        "email": "michael@reacttraining.com",
-        "avatarURL": "http://localhost:5001/michael.jpg"
-      },
-      {
-        "id": "tyler",
-        "name": "Tyler McGinnis",
-        "email": "tyler@reacttraining.com",
-        "avatarURL": "http://localhost:5001/tyler.jpg"
-      }
-    ]
-  )
+const IndexPage = ({ data }) => {
+  const [contacts, setContacts] = useState(data.contacts.nodes)
 
   const removeContact = (contact) => {
     setContacts(contacts.filter((c) => (c.id !== contact.id)))
@@ -150,4 +130,18 @@ const IndexPage = () => {
   )
 }
 
-export default IndexPage
+// INFO limited to 5 items from original array
+export const query = graphql`
+  query {
+    contacts: allContact {
+      nodes {
+        name
+        email
+        avatarURL
+        id
+      }
+    }
+  }
+`;
+
+export default IndexPage;

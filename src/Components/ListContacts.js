@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { graphql, Link } from 'gatsby';
 import escapeRegExp from 'escape-string-regexp'
 import sortBy from 'sort-by'
 import './index.css';
@@ -66,7 +67,7 @@ const contactList = {
     outline: "none"
   }
 
-function ListContacts({ contacts, onContactChange }) {
+export default function ListContacts({ contacts, onContactChange }) {
 
   const [ query, setQuery ] = useState('')
 
@@ -99,6 +100,9 @@ function ListContacts({ contacts, onContactChange }) {
             onChange={(e) => updateQuery(e.target.value)}
           >    
           </input>
+          <Link className='add-contact' to='create'>
+            Add Contact
+          </Link>
         </div>
 
         {showingContacts.length !== contacts.length && 
@@ -129,5 +133,3 @@ function ListContacts({ contacts, onContactChange }) {
       </div>
     )
 }
-
-export default ListContacts
